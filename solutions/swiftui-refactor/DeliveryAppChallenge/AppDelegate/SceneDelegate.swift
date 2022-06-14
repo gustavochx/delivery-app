@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SwiftUI
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
@@ -14,13 +15,30 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         
         guard let windowScene = (scene as? UIWindowScene) else { return }
+        window = UIWindow(frame: UIScreen.main.bounds)
+
+        // TODO: using swiftUI setUp just
+        if #available(iOS 13.0, *) {
+            setUpSwiftUIInterop()
+        } else {
+            setUpUIKitInterop()
+        }
+
+        window?.windowScene = windowScene
+        window?.makeKeyAndVisible()
+    }
+
+    private func setUpSwiftUIInterop() {
+        let mainView = MainView()
+        let mainViewHostingController = UIHostingController(rootView: mainView)
+        window?.rootViewController = mainViewHostingController
+    }
+
+    private func setUpUIKitInterop() {
         let viewController = HomeFactory.make(with: .init())
-        self.window = UIWindow(frame: UIScreen.main.bounds)
         let navigationController = UINavigationController(rootViewController: viewController)
         navigationController.navigationBar.prefersLargeTitles = true
-        self.window?.rootViewController = navigationController
-        self.window?.windowScene = windowScene
-        self.window?.makeKeyAndVisible()
+        window?.rootViewController = navigationController
     }
 }
 

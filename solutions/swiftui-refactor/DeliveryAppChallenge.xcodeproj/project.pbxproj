@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1548900D2858C25C00EC469A /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1548900C2858C25C00EC469A /* MainView.swift */; };
+		154890122858CC4800EC469A /* UIViewController+SwiftUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 154890112858CC4800EC469A /* UIViewController+SwiftUI.swift */; };
+		154890142858CD0C00EC469A /* UINavigationController+SwiftUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 154890132858CD0C00EC469A /* UINavigationController+SwiftUI.swift */; };
 		221F08A027346AA6007D2758 /* RestaurantCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 221F089F27346AA6007D2758 /* RestaurantCell.swift */; };
 		740F37582731EC2E00F8D89F /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 740F37572731EC2E00F8D89F /* NetworkManager.swift */; };
 		740F375A2731EC4800F8D89F /* APIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 740F37592731EC4800F8D89F /* APIError.swift */; };
@@ -56,6 +59,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1548900C2858C25C00EC469A /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		154890112858CC4800EC469A /* UIViewController+SwiftUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+SwiftUI.swift"; sourceTree = "<group>"; };
+		154890132858CD0C00EC469A /* UINavigationController+SwiftUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+SwiftUI.swift"; sourceTree = "<group>"; };
 		221F089F27346AA6007D2758 /* RestaurantCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantCell.swift; sourceTree = "<group>"; };
 		740F37572731EC2E00F8D89F /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		740F37592731EC4800F8D89F /* APIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = APIError.swift; path = DeliveryAppChallenge/Service/APIError.swift; sourceTree = SOURCE_ROOT; };
@@ -116,6 +122,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1548900E2858C81000EC469A /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				154890112858CC4800EC469A /* UIViewController+SwiftUI.swift */,
+				154890132858CD0C00EC469A /* UINavigationController+SwiftUI.swift */,
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
 		221F089E27346A93007D2758 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
@@ -157,6 +172,7 @@
 		983271BB272752AF0010C63A /* DeliveryAppChallenge */ = {
 			isa = PBXGroup;
 			children = (
+				1548900E2858C81000EC469A /* Extension */,
 				F57124662731C46300B48379 /* Components */,
 				983271EC272752C50010C63A /* Resources */,
 				983271ED272752D20010C63A /* AppDelegate */,
@@ -233,6 +249,7 @@
 				C0D63C6C273477EC002DEBD8 /* HomeView.swift */,
 				983271C0272752AF0010C63A /* HomeViewController.swift */,
 				F55233082735D0EF0099F35E /* HomeFactory.swift */,
+				1548900C2858C25C00EC469A /* MainView.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -406,14 +423,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				221F08A027346AA6007D2758 /* RestaurantCell.swift in Sources */,
+				1548900D2858C25C00EC469A /* MainView.swift in Sources */,
 				983271C1272752AF0010C63A /* HomeViewController.swift in Sources */,
 				F5912B18273C11AA00A71644 /* RestaurantListResponse.swift in Sources */,
 				C044D1C2273363E600EFC37B /* DividerView.swift in Sources */,
 				98EA055B272A092F007B0228 /* AddressSearchViewController.swift in Sources */,
 				98EA0566272A0A0F007B0228 /* DeliveryApi.swift in Sources */,
+				154890142858CD0C00EC469A /* UINavigationController+SwiftUI.swift in Sources */,
 				C0D63C6D273477EC002DEBD8 /* HomeView.swift in Sources */,
 				F55233092735D0EF0099F35E /* HomeFactory.swift in Sources */,
 				98EA055E272A0949007B0228 /* RestaurantListViewController.swift in Sources */,
+				154890122858CC4800EC469A /* UIViewController+SwiftUI.swift in Sources */,
 				7415B44727332AF600CE8273 /* NetworkRequest.swift in Sources */,
 				F5912B1C273C2B8500A71644 /* RestaurantListDataSource.swift in Sources */,
 				F5912B1A273C154C00A71644 /* RestaurantListRequest.swift in Sources */,
