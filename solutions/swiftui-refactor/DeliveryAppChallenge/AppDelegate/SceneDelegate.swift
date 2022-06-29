@@ -16,24 +16,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(frame: UIScreen.main.bounds)
+        let mainView = MainView()
+        let mainViewHostingController = UIHostingController(rootView: mainView)
 
-        // TODO: using swiftUI setUp just
-        if #available(iOS 13.0, *) {
-            setUpSwiftUIInterop()
-        } else {
-            setUpUIKitInterop()
-        }
-
+        window?.rootViewController = mainViewHostingController
         window?.windowScene = windowScene
         window?.makeKeyAndVisible()
     }
 
-    private func setUpSwiftUIInterop() {
-        let mainView = MainView()
-        let mainViewHostingController = UIHostingController(rootView: mainView)
-        window?.rootViewController = mainViewHostingController
-    }
-
+    // MARK: In case that we want to go back to the UIKit
     private func setUpUIKitInterop() {
         let viewController = HomeFactory.make(with: .init())
         let navigationController = UINavigationController(rootViewController: viewController)
@@ -41,4 +32,3 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window?.rootViewController = navigationController
     }
 }
-
