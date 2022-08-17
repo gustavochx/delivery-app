@@ -44,7 +44,10 @@ final class RestaurantCell: UITableViewCell{
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-    
+
+    func setup(_ restaurantName: String) {
+        restaurantNameLabel.text = restaurantName
+    }
 }
 
 extension RestaurantCell: ViewCode{

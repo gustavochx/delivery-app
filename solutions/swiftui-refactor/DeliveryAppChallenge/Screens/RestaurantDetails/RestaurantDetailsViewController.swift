@@ -8,10 +8,8 @@
 import UIKit
 
 class RestaurantDetailsViewController: UIViewController {
-
     override func viewDidLoad() {
         super.viewDidLoad()
-
         self.view.backgroundColor = .white
     }
 }

@@ -29,6 +29,7 @@ final class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Delivery App"
+        customView.delegate = self
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -36,9 +37,7 @@ final class HomeViewController: UIViewController {
     }
     
     func fetchRestaurants() {
-        
         deliveryApi.fetchRestaurants { [weak self] restaurants in
-            //        self.restaurants = restaurants
             DispatchQueue.main.async {
                 guard let self = self else {return}
                 self.customView.displayRestaurants(.init(restaurants: restaurants))
@@ -48,5 +47,8 @@ final class HomeViewController: UIViewController {
 }
 
 extension HomeViewController: HomeViewDelegate {
-    
+    func didTapOnRestaurantCell() {
+        let restaurantDetailsRoute = RestaurantDetailsRoute(presentationStyle: PushPresentationStyle())
+        try? RouterService.shared.navigate(to: restaurantDetailsRoute, from: self)
+    }
 }
