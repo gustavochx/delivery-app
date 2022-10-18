@@ -1,10 +1,3 @@
-//
-//  RestaurantCell.swift
-//  DeliveryAppChallenge
-//
-//  Created by Edson Neto on 04/11/21.
-//
-
 import UIKit
 import UIFoundations
 

@@ -1,15 +1,31 @@
 import UIKit
 import Navigation
-import Restaurants
+import RestaurantsInterface
+import ServicesInterface
+
+//final class HomeFactory {
+//
+//    struct Dependencies {}
+//
+//    static func make(with dependecies: Dependencies) -> UIViewController {
+//        let customView = HomeView()
+//        let deliveryApi = DeliveryApi()
+//        let viewController = HomeViewController(customView: customView, deliveryApi: deliveryApi)
+//        customView.delegate = viewController
+//        return viewController
+//    }
+//}
 
 final class HomeViewController: UIViewController {
     
     private let deliveryApi: DeliveryApiProtocol
     private let customView: HomeViewProtocol
+    private let navigator: NavigatorProtocol
     
-    init(customView: HomeViewProtocol, deliveryApi: DeliveryApiProtocol) {
+    init(customView: HomeViewProtocol, deliveryApi: DeliveryApiProtocol, navigator: NavigatorProtocol) {
         self.customView = customView
         self.deliveryApi = deliveryApi
+        self.navigator = navigator
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -44,6 +60,6 @@ final class HomeViewController: UIViewController {
 extension HomeViewController: HomeViewDelegate {
     func didTapOnRestaurantCell() {
         let restaurantDetailsRoute = RestaurantDetailsRoute(presentationStyle: PushPresentationStyle())
-        try? RouterService.shared.navigate(to: restaurantDetailsRoute, from: self)
+        try? navigator.navigate(to: restaurantDetailsRoute, from: self)
     }
 }

@@ -11,7 +11,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         registerFeatures()
 
         guard let windowScene = (scene as? UIWindowScene) else { return }
-        let viewController = HomeFactory.make(with: .init())
+        let viewController = UIViewController() // HomeFactory.make(with: .init())
         self.window = UIWindow(frame: UIScreen.main.bounds)
         let navigationController = UINavigationController(rootViewController: viewController)
         navigationController.navigationBar.prefersLargeTitles = true
