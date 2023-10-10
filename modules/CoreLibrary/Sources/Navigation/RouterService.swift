@@ -1,7 +1,8 @@
 import Foundation
 import UIKit
+import SwiftUI
 
-public typealias SceneFactory = (_ route: Route, _ bindings: Any?) -> UIViewController
+public typealias SceneFactory = (_ route: any Route, _ bindings: Any?) -> UIViewController
 
 public enum NavigatorFailure: Error {
     case invalidPresentationStyle
@@ -13,20 +14,19 @@ public enum SceneRegistrationFailure: Error {
     case alreadyExist
 }
 
-// TODO: Testing the whole navigation and thinking about communicate between scenes
 public protocol NavigatorProtocol {
     func navigate<Bindings>(
-        to route: Route,
+        to route: any Route,
         from: UIViewController,
         presentationStyle: PresentationStyle,
         bindings: Bindings?
     ) throws
     
-    func controller(for route: Route) throws -> UIViewController
+    func controller(for route: any Route) throws -> UIViewController
 }
 public extension NavigatorProtocol {
     func navigate(
-        to route: Route,
+        to route: any Route,
         from controller: UIViewController,
         presentationStyle: PresentationStyle
     ) {
@@ -35,7 +35,7 @@ public extension NavigatorProtocol {
 }
 
 public protocol SceneRegisteringProtocol {
-    func registerFactory(factory: @escaping SceneFactory, for route: Route.Type) throws
+    func registerFactory(factory: @escaping SceneFactory, for route: any Route.Type) throws
 }
 
 public final class RouterService: NavigatorProtocol, SceneRegisteringProtocol {
@@ -46,7 +46,7 @@ public final class RouterService: NavigatorProtocol, SceneRegisteringProtocol {
     public init() {}
 
     public func navigate<Bindings>(
-        to route: Route,
+        to route: any Route,
         from: UIViewController,
         presentationStyle: PresentationStyle,
         bindings: Bindings?
@@ -66,27 +66,18 @@ public final class RouterService: NavigatorProtocol, SceneRegisteringProtocol {
         case let presentationStyle as PresentPresentationStyle:
             from.present(
                 destinationController,
-                animated: presentationStyle.animated,
-                completion: presentationStyle.completion
+                animated: presentationStyle.animated
             )
         default:
             throw NavigatorFailure.invalidPresentationStyle
         }
     }
     
-    public func controller(for route: Route) throws -> UIViewController {
+    public func controller(for route: any Route) throws -> UIViewController {
         try mapRouteToController(route, bindings: nil)
     }
 
-    private func mapRouteToController(_ route: Route, bindings: Any?) throws -> UIViewController {
-        let identifier = type(of: route).identifier
-        guard let makeControllerForRoute = factories[identifier] else {
-            throw NavigatorFailure.invalidRoute
-        }
-        return makeControllerForRoute(route, bindings)
-    }
-
-    public func registerFactory(factory: @escaping SceneFactory, for route: Route.Type) throws {
+    public func registerFactory(factory: @escaping SceneFactory, for route: any Route.Type) throws {
 
         guard factories[route.identifier] == nil else {
             throw SceneRegistrationFailure.alreadyExist
@@ -94,4 +85,41 @@ public final class RouterService: NavigatorProtocol, SceneRegisteringProtocol {
 
         factories[route.identifier] = factory
     }
+}
+
+private extension RouterService {
+    func mapRouteToController(_ route: any Route, bindings: Any?) throws -> UIViewController {
+        let identifier = type(of: route).identifier
+        guard let makeControllerForRoute = factories[identifier] else {
+            throw NavigatorFailure.invalidRoute
+        }
+        return makeControllerForRoute(route, bindings)
+    }
+}
+
+// MARK: Wrapping ViewController into a SwiftUI
+public struct ViewFromRoute: View {
+    let route: any Route
+    let bindings: Any?
+    
+    public init(route: any Route, bindings: Any? = nil) {
+        self.route = route
+        self.bindings = bindings
+    }
+    
+    public var body: some View {
+        ToSwiftUI {
+            try! RouterService.shared.mapRouteToController(route, bindings: bindings)
+        }
+    }
+}
+
+struct ToSwiftUI: UIViewControllerRepresentable {
+    let controller: () -> UIViewController
+    
+    func makeUIViewController(context: Context) -> some UIViewController {
+        controller()
+    }
+    
+    func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {}
 }

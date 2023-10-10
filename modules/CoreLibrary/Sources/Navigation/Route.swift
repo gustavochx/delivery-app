@@ -5,8 +5,14 @@ public typealias RouterIdentifier = String
 
 public protocol PresentationStyle {}
 
-public protocol Route {
+public protocol Route: Identifiable {
     static var identifier: RouterIdentifier { get }
+}
+
+public extension Route {
+    var id: String {
+        Self.identifier
+    }
 }
 
 public struct PushPresentationStyle: PresentationStyle {
@@ -19,13 +25,8 @@ public struct PushPresentationStyle: PresentationStyle {
 
 public struct PresentPresentationStyle: PresentationStyle {
     let animated: Bool
-    let completion: (() -> Void)?
 
-    public init(
-        animated: Bool = true,
-        completion: (() -> Void)? = nil
-    ) {
+    public init(animated: Bool = true) {
         self.animated = animated
-        self.completion = completion
     }
 }

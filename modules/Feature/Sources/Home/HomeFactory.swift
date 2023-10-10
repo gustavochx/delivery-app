@@ -1,20 +1,17 @@
 import Foundation
 import Services
-import UIKit
+//import UIKit
+import SwiftUI
 import ServicesInterface
 
 public final class HomeFactory {
     public static func make(
         source: HomeStartSource
     ) -> UIViewController {
-        let customView = HomeView()
-        let deliveryClient = DeliveryClient()
-        let viewController = HomeViewController(
-            source: source,
-            customView: customView,
-            deliveryClient: deliveryClient
+        let homeViewModel = HomeViewModel(
+            initialState: .init(),
+            environment: .init(deliveryClient: DeliveryClient())
         )
-        customView.delegate = viewController
-        return viewController
+        return UIHostingController(rootView: HomeView(viewModel: homeViewModel))
     }
 }

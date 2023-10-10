@@ -24,8 +24,8 @@
 		}
 	},
 	{
-		"name": "Benjamin a Padaria",
-		"category": "Padaria",
+		"name": "Outback Steakhouse",
+		"category": "Steakhouse",
 		"delivery_time": {
 			"min": 23,
 			"max": 33

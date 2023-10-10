@@ -2,31 +2,23 @@ import Foundation
 import Navigation
 import ServicesInterface
 
-public struct RestaurantDetailsRoute: Route {
+public struct RestaurantDetailsRoute: Route, Equatable {
     public static var identifier: RouterIdentifier {
         "RestaurantDetails"
     }
     
     public let restaurantInputs: RestaurantDetailsInputs
-    public let bindings: RestaurantDetailsBindings
 
     public init(
         restaurant: Restaurant,
-        deliveryClient: DeliveryClientProtocol,
-        delegate: RestaurantActionsDelegate?,
-        onTapSomething: @escaping () -> Void
+        deliveryClient: DeliveryClientProtocol
     ) {
         self.restaurantInputs = RestaurantDetailsInputs(restaurant: restaurant)
-        
-        self.bindings = RestaurantDetailsBindings(
-            deliveryClient: deliveryClient,
-            delegate: delegate,
-            onTapSomething: onTapSomething
-        )
     }
 }
 
-public struct RestaurantDetailsInputs {
+
+public struct RestaurantDetailsInputs: Equatable {
     public let restaurant: Restaurant
 }
 
