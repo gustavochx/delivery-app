@@ -94,7 +94,7 @@ extension RestaurantHeaderView: ViewCode {
         NSLayoutConstraint.activate([
             restaurantImageView.widthAnchor.constraint(equalToConstant: imageFrame),
             restaurantImageView.heightAnchor.constraint(equalToConstant: imageFrame),
-            mainContentStackView.topAnchor.constraint(equalTo: topAnchor),
+            mainContentStackView.topAnchor.constraint(equalTo: topAnchor, constant: 5.0),
             mainContentStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16.0),
             mainContentStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16.0),
             detailContentStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16.0)

@@ -12,6 +12,9 @@ let package = Package(
         .library(
             name: "UIFoundations",
             targets: ["UIFoundations"]),
+        // TODO: Discuss a better naming with Bocato
+        .library(name: "SwiftUIComponents",
+                 targets: ["SwiftUIComponents"])
     ],
     dependencies: [],
     targets: [
@@ -21,5 +24,8 @@ let package = Package(
         .testTarget(
             name: "UIFoundationsTests",
             dependencies: ["UIFoundations"]),
+        .target(
+            name: "SwiftUIComponents",
+            dependencies: [])
     ]
 )

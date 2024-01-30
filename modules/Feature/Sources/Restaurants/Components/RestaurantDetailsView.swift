@@ -63,7 +63,7 @@ extension RestaurantDetailsView: ViewCode {
     
     func setupConstraints() {
         NSLayoutConstraint.activate([
-            contentStackView.topAnchor.constraint(equalTo: topAnchor, constant: 100.0),
+            contentStackView.topAnchor.constraint(equalTo: topAnchor),
             contentStackView.trailingAnchor.constraint(equalTo: trailingAnchor),
             contentStackView.leadingAnchor.constraint(equalTo: leadingAnchor),
             restaurantMenuTableView.topAnchor.constraint(equalTo: contentStackView.bottomAnchor, constant: 20.0),
