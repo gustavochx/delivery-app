@@ -17,6 +17,9 @@ let package = Package(
     dependencies: [
         .package(path: "../CoreLibrary"),
         .package(path: "../UILibrary"),
+        // Development - Third Party
+        .package(url: "https://github.com/pointfreeco/xctest-dynamic-overlay", from: "1.1.0"),
+        .package(url: "https://github.com/pointfreeco/swift-dependencies", from: "1.2.0"),
     ],
     targets: [
         // Home
@@ -27,7 +30,7 @@ let package = Package(
                 "RestaurantsInterface",
                 // Core
                 .product(name: "Navigation", package: "CoreLibrary"),
-                .product(name: "DependencyInjection", package: "CoreLibrary"),
+                .swiftDependencies,
                 // Interfaces
                 .product(name: "ServicesInterface", package: "CoreLibrary"),
                 // UI
@@ -42,7 +45,7 @@ let package = Package(
             name: "RestaurantsInterface",
             dependencies: [
                 .product(name: "Navigation", package: "CoreLibrary"),
-                .product(name: "DependencyInjection", package: "CoreLibrary"),
+                .swiftDependencies,
             ]
         ),
         .target(
@@ -58,3 +61,10 @@ let package = Package(
         ),
     ]
 )
+
+// MARK: - Target Dependency Aliases
+extension PackageDescription.Target.Dependency {
+    // Development - Third Party
+    static let swiftDependencies: Self = .product(name: "Dependencies", package: "swift-dependencies")
+    static let xcTestDynamicOverlay: Self = .product(name: "XCTestDynamicOverlay", package: "xctest-dynamic-overlay")
+}

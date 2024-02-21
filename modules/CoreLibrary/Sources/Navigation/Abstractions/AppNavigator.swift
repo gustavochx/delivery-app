@@ -27,3 +27,30 @@ public extension AppNavigator {
         try? navigate(to: route, from: controller, presentationStyle: presentationStyle, bindings: ())
     }
 }
+
+// MARK: - Dependency Injection
+
+import Dependencies
+import XCTestDynamicOverlay
+
+internal enum AppNavigatorDependencyKey: DependencyKey {
+    static var liveValue: AppNavigator {
+        @Dependency(\.navigationService) var navigationService
+        return navigationService
+    }
+    
+    static var testValue: AppNavigator {
+        #if DEBUG
+        return NavigationServiceFailing()
+        #else
+        fatalError("`testValue` should not be acessed on non DEBUG builds.")
+        #endif
+    }
+}
+
+public extension DependencyValues {
+    var appNavigator: AppNavigator {
+        get { self[AppNavigatorDependencyKey.self] }
+        set { self[AppNavigatorDependencyKey.self] = newValue }
+    }
+}

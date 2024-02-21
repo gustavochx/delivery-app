@@ -1,4 +1,4 @@
-import DependencyInjection
+import Dependencies
 import Home
 import Navigation
 import Networking
@@ -7,17 +7,15 @@ import Services
 import UIKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
-    @Resolved var navigationService: NavigationService
     var window: UIWindow?
 
     func scene(_ scene: UIScene, willConnectTo _: UISceneSession, options _: UIScene.ConnectionOptions) {
         registerCores()
         registerFeatures()
 
-        let homeRoute: HomeRoute = .init(source: .appStart)
         guard
             let windowScene = (scene as? UIWindowScene),
-            let rootViewController = try? navigationService.controller(for: homeRoute)
+            let rootViewController = resolveHomeController()
         else { return }
 
         window = UIWindow(frame: UIScreen.main.bounds)
@@ -27,10 +25,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window?.windowScene = windowScene
         window?.makeKeyAndVisible()
     }
+    
+    private func resolveHomeController() -> UIViewController? {
+        @Dependency(\.navigationService) var navigationService
+        
+        let homeRoute: HomeRoute = .init(source: .appStart)
+        return try? navigationService.controller(for: homeRoute)
+    }
 
     private func registerCores() {
-        DependencyInjection.bootstrap()
-        Navigation.bootstrap()
         Networking.bootstrap(
             baseURL: URL(string: "https://raw.githubusercontent.com/devpass-tech/challenge-delivery-app/main/api/")!
         )

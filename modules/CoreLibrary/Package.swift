@@ -43,8 +43,9 @@ let package = Package(
         ),
     ],
     dependencies: [
-        // Dependencies declare other packages that this package depends on.
-        // .package(url: /* package url */, from: "1.0.0"),
+        // Development - Third Party
+        .package(url: "https://github.com/pointfreeco/xctest-dynamic-overlay", from: "1.1.0"),
+        .package(url: "https://github.com/pointfreeco/swift-dependencies", from: "1.2.0"),
     ],
     targets: [
         // DependencyInjection
@@ -55,7 +56,9 @@ let package = Package(
         // Navigation
         .target(
             name: "Navigation",
-            dependencies: []
+            dependencies: [
+                .swiftDependencies
+            ]
         ),
         .testTarget(
             name: "NavigationTests",
@@ -98,3 +101,11 @@ let package = Package(
         ),
     ]
 )
+
+// MARK: - Target Dependency Aliases
+
+extension PackageDescription.Target.Dependency {
+    // Development - Third Party
+    static let swiftDependencies: Self = .product(name: "Dependencies", package: "swift-dependencies")
+    static let xcTestDynamicOverlay: Self = .product(name: "XCTestDynamicOverlay", package: "xctest-dynamic-overlay")
+}

@@ -1,7 +1,8 @@
 import Foundation
 import UIKit
 
-public typealias NavigationService = AppNavigator & SceneRegistration
+public protocol NavigationService: AppNavigator, SceneRegistration {}
+
 final class NavigationServiceImplementation: NavigationService {
     private(set) var factories: [RouterIdentifier: SceneFactory] = [:]
 
@@ -54,5 +55,50 @@ final class NavigationServiceImplementation: NavigationService {
         }
 
         factories[route.identifier] = factory
+    }
+}
+
+// MARK: - Dependency Injection
+
+import Dependencies
+import XCTestDynamicOverlay
+
+internal enum NavigationServiceDependencyKey: DependencyKey {
+    static var liveValue: NavigationService {
+        NavigationServiceImplementation()
+    }
+    
+    static var testValue: NavigationService {
+        #if DEBUG
+        return NavigationServiceFailing()
+        #else
+        fatalError("`testValue` should not be acessed on non DEBUG builds.")
+        #endif
+    }
+}
+
+public extension DependencyValues {
+    var navigationService: NavigationService {
+        get { self[NavigationServiceDependencyKey.self] }
+        set { self[NavigationServiceDependencyKey.self] = newValue }
+    }
+}
+
+// MARK: - Test Support
+
+public struct NavigationServiceFailing: NavigationService {
+    init() {}
+    
+    public func navigate<Bindings>(to route: Route, from: UIViewController, presentationStyle: PresentationStyle, bindings: Bindings?) throws {
+        XCTFail("\(#function) is not implemented!")
+    }
+    
+    public func controller(for route: Route) throws -> UIViewController {
+        XCTFail("\(#function) is not implemented!")
+        return .init()
+    }
+    
+    public func registerFactory(factory: @escaping SceneFactory, for route: Route.Type) throws {
+        XCTFail("\(#function) is not implemented!")
     }
 }
