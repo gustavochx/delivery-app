@@ -2,9 +2,10 @@ import DependencyInjection
 import Foundation
 import NetworkingInterface
 import ServicesInterface
+import Dependencies
 
 public struct DeliveryClient: DeliveryClientProtocol {
-    @Resolved var networkManager: NetworkManagerProtocol
+    @Dependency(\.networkManager) var networkManager
 
     public init() {}
 
@@ -14,5 +15,11 @@ public struct DeliveryClient: DeliveryClientProtocol {
 
     public func fetchRestaurantDetail(restaurantName _: String, completion: @escaping (RestaurantDetail?) -> Void) {
         completion(RestaurantDetail.fixture)
+    }
+}
+
+extension DeliveryClientDependencyKey: DependencyKey {
+    public static var liveValue: DeliveryClientProtocol {
+        DeliveryClient()
     }
 }

@@ -2,11 +2,12 @@ import DependencyInjection
 import Foundation
 import Navigation
 import ServicesInterface
+import Dependencies
 
 public enum HomeFeature {
     struct Dependencies {
-        @Resolved var navigationService: NavigationService
-        @Resolved var deliveryClient: DeliveryClientProtocol
+        @Dependency(\.navigationService) var navigationService: NavigationService
+        @Dependency(\.deliveryClient) var deliveryClient: DeliveryClientProtocol
     }
 
     static var dependencies: Dependencies = .init()

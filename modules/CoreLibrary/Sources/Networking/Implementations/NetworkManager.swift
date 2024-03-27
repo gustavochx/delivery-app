@@ -1,4 +1,5 @@
 import Foundation
+import Dependencies
 import NetworkingInterface
 
 public final class NetworkManager: NetworkManagerProtocol {
@@ -52,5 +53,11 @@ public final class NetworkManager: NetworkManagerProtocol {
                 completion(.failure(NetworkingError.decodeError))
             }
         }
+    }
+}
+
+extension NetworkManagerDependencyKey: DependencyKey {
+    public static var liveValue: NetworkManagerProtocol {
+        NetworkManager()
     }
 }

@@ -10,7 +10,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
 
     func scene(_ scene: UIScene, willConnectTo _: UISceneSession, options _: UIScene.ConnectionOptions) {
-        registerCores()
+//        registerCores()
         registerFeatures()
 
         guard
@@ -33,12 +33,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         return try? navigationService.controller(for: homeRoute)
     }
 
-    private func registerCores() {
-        Networking.bootstrap(
-            baseURL: URL(string: "https://raw.githubusercontent.com/devpass-tech/challenge-delivery-app/main/api/")!
-        )
-        Services.bootstrap()
-    }
+//    private func registerCores() {
+//        Networking.bootstrap(
+//            baseURL: URL(string: "https://raw.githubusercontent.com/devpass-tech/challenge-delivery-app/main/api/")!
+//        )
+//        Services.bootstrap()
+//    }
 
     private func registerFeatures() {
         HomeFeature.bootstrap()

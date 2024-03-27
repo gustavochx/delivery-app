@@ -1,5 +1,7 @@
 import Foundation
 import UIKit
+import Dependencies
+import XCTestDynamicOverlay
 
 public protocol NavigationService: AppNavigator, SceneRegistration {}
 
@@ -59,10 +61,6 @@ final class NavigationServiceImplementation: NavigationService {
 }
 
 // MARK: - Dependency Injection
-
-import Dependencies
-import XCTestDynamicOverlay
-
 internal enum NavigationServiceDependencyKey: DependencyKey {
     static var liveValue: NavigationService {
         NavigationServiceImplementation()
@@ -85,7 +83,7 @@ public extension DependencyValues {
 }
 
 // MARK: - Test Support
-
+#if DEBUG
 public struct NavigationServiceFailing: NavigationService {
     init() {}
     
@@ -102,3 +100,4 @@ public struct NavigationServiceFailing: NavigationService {
         XCTFail("\(#function) is not implemented!")
     }
 }
+#endif

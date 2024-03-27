@@ -1,5 +1,7 @@
 import Foundation
 import UIKit
+import Dependencies
+import XCTestDynamicOverlay
 
 public typealias SceneFactory = (_ route: Route, _ bindings: Any?) -> UIViewController
 
@@ -12,10 +14,6 @@ public protocol SceneRegistration {
 }
 
 // MARK: - Dependency Injection
-
-import Dependencies
-import XCTestDynamicOverlay
-
 internal enum SceneRegistrationDependencyKey: DependencyKey {
     static var liveValue: SceneRegistration {
         @Dependency(\.navigationService) var navigationService

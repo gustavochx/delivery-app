@@ -3,11 +3,12 @@ import Foundation
 import Navigation
 import RestaurantsInterface
 import ServicesInterface
+import Dependencies
 
 public enum RestaurantFeature {
     struct Dependencies {
-        @Resolved var navigationService: NavigationService
-        @Resolved var deliveryClient: DeliveryClientProtocol
+        @Dependency(\.navigationService) var navigationService
+        @Dependency(\.deliveryClient) var deliveryClient
     }
 
     static var dependencies: Dependencies = .init()

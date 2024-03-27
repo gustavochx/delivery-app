@@ -27,8 +27,4 @@ public func bootstrap(
     environment = .init(
         baseURL: baseURL
     )
-    DependencyInjection.register(
-        instance: NetworkManager(),
-        forMetaType: NetworkManagerProtocol.self
-    )
 }
