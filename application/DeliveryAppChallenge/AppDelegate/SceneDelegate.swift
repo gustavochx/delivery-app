@@ -10,7 +10,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
 
     func scene(_ scene: UIScene, willConnectTo _: UISceneSession, options _: UIScene.ConnectionOptions) {
-//        registerCores()
         registerFeatures()
 
         guard
@@ -30,7 +29,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         @Dependency(\.navigationService) var navigationService
         
         let homeRoute: HomeRoute = .init(source: .appStart)
-        return try? navigationService.controller(for: homeRoute)
+        return try? navigationService.controller(for: homeRoute, bindings: nil)
     }
 
     private func registerFeatures() {

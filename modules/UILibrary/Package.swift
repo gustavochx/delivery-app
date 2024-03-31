@@ -13,6 +13,10 @@ let package = Package(
             name: "UIFoundations",
             targets: ["UIFoundations"]
         ),
+        .library(
+            name: "SwiftUIFoundations",
+            targets: ["SwiftUIFoundations"]
+        )
     ],
     dependencies: [],
     targets: [
@@ -24,5 +28,9 @@ let package = Package(
             name: "UIFoundationsTests",
             dependencies: ["UIFoundations"]
         ),
+        .target(
+            name: "SwiftUIFoundations",
+            dependencies: []
+        )
     ]
 )

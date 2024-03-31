@@ -9,10 +9,10 @@ public protocol HomeViewDelegate: AnyObject {
 
 public protocol HomeViewProtocol: UIView {
     var delegate: HomeViewDelegate? { get set }
-    func displayRestaurants(_ viewModel: HomeView.ViewModel)
+    func displayRestaurants(_ viewModel: HomeViewUIKit.ViewModel)
 }
 
-public final class HomeView: UIView {
+public final class HomeViewUIKit: UIView {
     public struct ViewModel {
         let restaurants: [Restaurant]
     }
@@ -42,7 +42,7 @@ public final class HomeView: UIView {
     }
 }
 
-extension HomeView: ViewCode {
+extension HomeViewUIKit: ViewCode {
     public func setupComponents() {
         addSubview(tableView)
     }
@@ -57,14 +57,14 @@ extension HomeView: ViewCode {
     }
 }
 
-extension HomeView: HomeViewProtocol {
+extension HomeViewUIKit: HomeViewProtocol {
     public func displayRestaurants(_ viewModel: ViewModel) {
         self.viewModel = viewModel
         tableView.reloadData()
     }
 }
 
-extension HomeView: UITableViewDataSource {
+extension HomeViewUIKit: UITableViewDataSource {
     public func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
         return viewModel.restaurants.count
     }
@@ -76,7 +76,7 @@ extension HomeView: UITableViewDataSource {
     }
 }
 
-extension HomeView: UITableViewDelegate {
+extension HomeViewUIKit: UITableViewDelegate {
     public func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
         let restaurant = viewModel.restaurants[indexPath.row]
         delegate?.didTapOnRestaurantCell(restaurant: restaurant)
