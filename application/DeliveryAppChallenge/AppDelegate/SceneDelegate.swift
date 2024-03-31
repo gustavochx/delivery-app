@@ -33,13 +33,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         return try? navigationService.controller(for: homeRoute)
     }
 
-//    private func registerCores() {
-//        Networking.bootstrap(
-//            baseURL: URL(string: "https://raw.githubusercontent.com/devpass-tech/challenge-delivery-app/main/api/")!
-//        )
-//        Services.bootstrap()
-//    }
-
     private func registerFeatures() {
         HomeFeature.bootstrap()
         RestaurantFeature.bootstrap()

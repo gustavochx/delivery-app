@@ -3,6 +3,7 @@ import Dependencies
 import XCTestDynamicOverlay
 
 // sourcery: swiftDepAutoregister
+// TODO: Discuss with Bocato how the Failing implementation should work with computed variables
 public protocol EnvironmentProtocol {
     func getBaseURL() -> String
 }

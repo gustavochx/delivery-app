@@ -6,15 +6,13 @@ public final class NetworkManager: NetworkManagerProtocol {
     // MARK: - Private Properties
 
     private let urlSession: URLSessionProtocol
+    
+    private let environment: EnvironmentProtocol
 
     // MARK: - Init
-
-    public convenience init() {
-        self.init(urlSession: URLSession.shared)
-    }
-
-    init(urlSession: URLSessionProtocol) {
+    init(urlSession: URLSessionProtocol, environment: EnvironmentProtocol) {
         self.urlSession = urlSession
+        self.environment = environment
     }
 
     // MARK: - Public Functions
@@ -58,6 +56,8 @@ public final class NetworkManager: NetworkManagerProtocol {
 
 extension NetworkManagerDependencyKey: DependencyKey {
     public static var liveValue: NetworkManagerProtocol {
-        NetworkManager()
+        @Dependency(\.environment) var environment
+        
+        return NetworkManager(urlSession: URLSession.shared, environment: environment)
     }
 }
