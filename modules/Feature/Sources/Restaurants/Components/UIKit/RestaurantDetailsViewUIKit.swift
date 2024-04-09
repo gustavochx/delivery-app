@@ -2,7 +2,7 @@ import ServicesInterface
 import UIFoundations
 import UIKit
 
-final class RestaurantDetailsView: UIView {
+final class RestaurantDetailsViewUIKit: UIView {
     private let rowHeight: CGFloat = 100.0
 
     private var restaurantDetails: RestaurantDetail?
@@ -50,7 +50,7 @@ final class RestaurantDetailsView: UIView {
     }
 }
 
-extension RestaurantDetailsView: ViewCode {
+extension RestaurantDetailsViewUIKit: ViewCode {
     func setupComponents() {
         addSubview(contentStackView)
         addSubview(restaurantMenuTableView)
@@ -71,7 +71,7 @@ extension RestaurantDetailsView: ViewCode {
     }
 }
 
-extension RestaurantDetailsView: UITableViewDataSource, UITableViewDelegate {
+extension RestaurantDetailsViewUIKit: UITableViewDataSource, UITableViewDelegate {
     func numberOfSections(in _: UITableView) -> Int {
         restaurantDetails?.grouppedCategories.count ?? 0
     }

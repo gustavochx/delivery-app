@@ -16,9 +16,9 @@ struct HomeView: View {
             contentView
                 .navigationDestination(for: $viewModel.state.route, destination: { route in
                     switch route {
-                    case let .restaurant(route):
+                    case let .restaurant(homeRoute):
                         ViewFromRoute(
-                            route: route,
+                            route: homeRoute,
                             navigationService: viewModel.environment.appNavigator,
                             bindings: RestaurantDetailsBindings(
                                 deliveryClient: viewModel.environment.deliveryClient,
