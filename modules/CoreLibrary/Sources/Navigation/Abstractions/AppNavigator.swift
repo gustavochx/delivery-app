@@ -9,18 +9,18 @@ public enum AppNavigationFailure: Error {
 
 public protocol AppNavigator {
     func navigate<Bindings>(
-        to route: Route,
+        to route: any Route,
         from: UIViewController,
         presentationStyle: PresentationStyle,
         bindings: Bindings?
     ) throws
 
-    func controller(for route: Route) throws -> UIViewController
+    func controller(for route: any Route, bindings: Any?) throws -> UIViewController
 }
 
 public extension AppNavigator {
     func navigate(
-        to route: Route,
+        to route: any Route,
         from controller: UIViewController,
         presentationStyle: PresentationStyle
     ) {
