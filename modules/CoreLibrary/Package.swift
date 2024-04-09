@@ -67,7 +67,9 @@ let package = Package(
         // Networking
         .target(
             name: "NetworkingInterface",
-            dependencies: []
+            dependencies: [
+                .swiftDependencies
+            ]
         ),
         .target(
             name: "Networking",
@@ -82,7 +84,9 @@ let package = Package(
         // Services
         .target(
             name: "ServicesInterface",
-            dependencies: []
+            dependencies: [
+                .swiftDependencies
+            ]
         ),
         .target(
             name: "Services",

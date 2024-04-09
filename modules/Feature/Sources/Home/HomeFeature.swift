@@ -2,11 +2,13 @@ import DependencyInjection
 import Foundation
 import Navigation
 import ServicesInterface
+import Dependencies
+import SwiftUI
 
 public enum HomeFeature {
     struct Dependencies {
-        @Resolved var navigationService: NavigationService
-        @Resolved var deliveryClient: DeliveryClientProtocol
+        @Dependency(\.navigationService) var navigationService: NavigationService
+        @Dependency(\.deliveryClient) var deliveryClient: DeliveryClientProtocol
     }
 
     static var dependencies: Dependencies = .init()
@@ -20,18 +22,16 @@ public enum HomeFeature {
                 else {
                     preconditionFailure("Expected HomeRoute")
                 }
-
-                let customView = HomeView()
-                let viewController = HomeViewController(
-                    source: route.source,
-                    customView: customView,
-                    dependencies: .init(
-                        appNavigator: dependencies.navigationService,
-                        deliveryClient: dependencies.deliveryClient
+                let homeViewModel = HomeViewModel(
+                    initialState: .init(
+                        startSource: route.source
+                    ),
+                    environment: .init(
+                        deliveryClient: dependencies.deliveryClient,
+                        appNavigator: dependencies.navigationService
                     )
                 )
-                customView.delegate = viewController
-                return viewController
+                return UIHostingController(rootView: HomeView(viewModel: homeViewModel))
             },
             for: HomeRoute.self
         )

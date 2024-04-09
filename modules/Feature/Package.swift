@@ -35,6 +35,7 @@ let package = Package(
                 .product(name: "ServicesInterface", package: "CoreLibrary"),
                 // UI
                 .product(name: "UIFoundations", package: "UILibrary"),
+                .product(name: "SwiftUIFoundations", package: "UILibrary")
             ]
         ),
         .testTarget(

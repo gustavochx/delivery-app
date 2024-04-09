@@ -22,7 +22,14 @@ public struct RestaurantDetail: Decodable {
     }
 
     public var grouppedCategories: [String] {
-        menu.map { $0.category }
+        var set = Set<String>()
+        var arrayOrdered = [String]()
+        for value in menu {
+            if set.insert(value.category).inserted {
+                arrayOrdered.append(value.category)
+            }
+        }
+        return arrayOrdered
     }
 
     public func menuOptionsFor(category: String) -> [RestaurantMenuOption] {

@@ -1,5 +1,7 @@
 import Foundation
 import UIKit
+import Dependencies
+import XCTestDynamicOverlay
 
 public protocol NavigationService: AppNavigator, SceneRegistration {}
 
@@ -9,7 +11,7 @@ final class NavigationServiceImplementation: NavigationService {
     init() {}
 
     func navigate<Bindings>(
-        to route: Route,
+        to route: any Route,
         from: UIViewController,
         presentationStyle: PresentationStyle,
         bindings: Bindings?
@@ -37,11 +39,11 @@ final class NavigationServiceImplementation: NavigationService {
         }
     }
 
-    func controller(for route: Route) throws -> UIViewController {
+    func controller(for route: any Route, bindings: Any?) throws -> UIViewController {
         try mapRouteToController(route, bindings: nil)
     }
 
-    func mapRouteToController(_ route: Route, bindings: Any?) throws -> UIViewController {
+    func mapRouteToController(_ route: any Route, bindings: Any?) throws -> UIViewController {
         let identifier = type(of: route).identifier
         guard let makeControllerForRoute = factories[identifier] else {
             throw AppNavigationFailure.invalidRoute
@@ -49,7 +51,7 @@ final class NavigationServiceImplementation: NavigationService {
         return makeControllerForRoute(route, bindings)
     }
 
-    func registerFactory(factory: @escaping SceneFactory, for route: Route.Type) throws {
+    func registerFactory(factory: @escaping SceneFactory, for route: any Route.Type) throws {
         guard factories[route.identifier] == nil else {
             throw SceneRegistrationFailure.alreadyExist
         }
@@ -59,10 +61,6 @@ final class NavigationServiceImplementation: NavigationService {
 }
 
 // MARK: - Dependency Injection
-
-import Dependencies
-import XCTestDynamicOverlay
-
 internal enum NavigationServiceDependencyKey: DependencyKey {
     static var liveValue: NavigationService {
         NavigationServiceImplementation()
@@ -85,20 +83,21 @@ public extension DependencyValues {
 }
 
 // MARK: - Test Support
-
+#if DEBUG
 public struct NavigationServiceFailing: NavigationService {
     init() {}
     
-    public func navigate<Bindings>(to route: Route, from: UIViewController, presentationStyle: PresentationStyle, bindings: Bindings?) throws {
+    public func navigate<Bindings>(to route: any Route, from: UIViewController, presentationStyle: PresentationStyle, bindings: Bindings?) throws {
         XCTFail("\(#function) is not implemented!")
     }
     
-    public func controller(for route: Route) throws -> UIViewController {
+    public func controller(for route: any Route, bindings: Any?) throws -> UIViewController {
         XCTFail("\(#function) is not implemented!")
         return .init()
     }
     
-    public func registerFactory(factory: @escaping SceneFactory, for route: Route.Type) throws {
+    public func registerFactory(factory: @escaping SceneFactory, for route: any Route.Type) throws {
         XCTFail("\(#function) is not implemented!")
     }
 }
+#endif

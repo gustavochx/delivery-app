@@ -1,21 +1,19 @@
 import Foundation
 import UIKit
+import Dependencies
+import XCTestDynamicOverlay
 
-public typealias SceneFactory = (_ route: Route, _ bindings: Any?) -> UIViewController
+public typealias SceneFactory = (_ route: any Route, _ bindings: Any?) -> UIViewController
 
 public enum SceneRegistrationFailure: Error {
     case alreadyExist
 }
 
 public protocol SceneRegistration {
-    func registerFactory(factory: @escaping SceneFactory, for route: Route.Type) throws
+    func registerFactory(factory: @escaping SceneFactory, for route: any Route.Type) throws
 }
 
 // MARK: - Dependency Injection
-
-import Dependencies
-import XCTestDynamicOverlay
-
 internal enum SceneRegistrationDependencyKey: DependencyKey {
     static var liveValue: SceneRegistration {
         @Dependency(\.navigationService) var navigationService

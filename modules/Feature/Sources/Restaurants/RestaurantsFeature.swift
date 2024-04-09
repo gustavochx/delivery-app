@@ -3,11 +3,13 @@ import Foundation
 import Navigation
 import RestaurantsInterface
 import ServicesInterface
+import Dependencies
+import SwiftUI
 
 public enum RestaurantFeature {
     struct Dependencies {
-        @Resolved var navigationService: NavigationService
-        @Resolved var deliveryClient: DeliveryClientProtocol
+        @Dependency(\.navigationService) var navigationService
+        @Dependency(\.deliveryClient) var deliveryClient
     }
 
     static var dependencies: Dependencies = .init()
@@ -17,21 +19,16 @@ public enum RestaurantFeature {
         try? navigationService.registerFactory(
             factory: { route, bindings in
                 guard
-                    let route = route as? RestaurantDetailsRoute,
-                    let bindings = bindings as? RestaurantDetailsBindings
+                    let route = route as? RestaurantDetailsRoute
                 else {
                     preconditionFailure("Expected HomeRoute")
                 }
+                
                 let viewModel = RestaurantDetailsViewModel(
-                    restaurant: route.restaurantInputs.restaurant,
-                    onTapSomething: bindings.onTapSomething
+                    initialState: .init(restaurant: route.restaurantInputs.restaurant),
+                    environment: .init(deliveryClient: dependencies.deliveryClient)
                 )
-                let viewController = RestaurantDetailsViewController(
-                    viewModel: viewModel,
-                    deliveryClient: dependencies.deliveryClient
-                )
-                viewController.delegate = bindings.delegate
-                return viewController
+                return UIHostingController(rootView: RestaurantDetailsView(viewModel: viewModel))
             },
             for: RestaurantDetailsRoute.self
         )
